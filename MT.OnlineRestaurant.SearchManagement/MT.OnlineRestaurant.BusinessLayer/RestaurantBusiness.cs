@@ -204,7 +204,60 @@ namespace MT.OnlineRestaurant.BusinessLayer
 
         public IQueryable<RestaurantInformation> SearchForRestaurant(SearchForRestaurant searchDetails)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<RestaurantInformation> restaurant_Info = new List<RestaurantInformation>();
+                IQueryable<RestaurantSearchDetails> searched_Restaurant;
+
+                DataLayer.DataEntity.SearchForRestautrant searchCritera = new DataLayer.DataEntity.SearchForRestautrant
+                {
+                    location = new DataLayer.DataEntity.LocationDetails
+                    {
+                        distance = searchDetails.location.distance,
+                        restaurant_Name = searchDetails.location.restaurant_Name,
+                        xaxis = searchDetails.location.xaxis,
+                        yaxis = searchDetails.location.yaxis
+                    },
+                    search = new DataLayer.DataEntity.AddtitionalFeatureForSearch
+                    {
+                        cuisine = (string.IsNullOrEmpty(searchDetails.search.cuisine) ? "" : searchDetails.search.cuisine),
+                        Menu = (string.IsNullOrEmpty(searchDetails.search.Menu) ? "" : searchDetails.search.Menu),
+                        rating = ((searchDetails.search.rating) != null && searchDetails.search.rating > 0) ? searchDetails.search.rating : 0
+
+                    }
+                };
+
+
+                searched_Restaurant = search_Repository.SearchForRestaurant(searchCritera);
+                if (searched_Restaurant != null)
+                {
+                    foreach (var restaurants in searched_Restaurant)
+                    {
+                        RestaurantInformation restaurant_Details = new RestaurantInformation
+                        {
+                            restaurant_ID = restaurants.restauran_ID,
+                            restaurant_Name = restaurants.restaurant_Name,
+                            restaurant_Address = restaurants.restaurant_Address,
+                            restaurant_ContactNo = restaurants.restaurant_PhoneNumber,
+                            closing_Time = restaurants.closing_Time,
+                            opening_Time = restaurants.opening_Time,
+                            website = restaurants.restraurant_Website,
+                            xaxis = restaurants.xaxis,
+                            yaxis = restaurants.yaxis,
+                            Rating = 1
+
+
+                        };
+                        restaurant_Info.Add(restaurant_Details);
+                    }
+                }
+                return restaurant_Info.AsQueryable();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         /// <summary>

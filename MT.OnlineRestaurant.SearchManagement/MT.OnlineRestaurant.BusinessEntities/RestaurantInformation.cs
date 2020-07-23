@@ -15,5 +15,6 @@ namespace MT.OnlineRestaurant.BusinessEntities
         public string website { get; set; }
         public string opening_Time { get; set; }
         public string closing_Time { get; set; }
+        public int Rating { get; set; }
     }
 }

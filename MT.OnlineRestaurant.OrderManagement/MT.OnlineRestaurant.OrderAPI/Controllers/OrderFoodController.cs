@@ -95,7 +95,28 @@ namespace MT.OnlineRestaurant.OrderAPI.Controllers
         //    }
 
         //    return BadRequest("Failed to get the reports");
-        //}     
+        //} 
+        
+
+        //public async Task<IActionResult> CartInfo([FromQuery] int restaurantID, int menuID,int quantity,decimal cost)
+        //{
+        //    CartValue cartValue = new CartValue();
+        //    List<string> noOfMsgToSend = new List<string>();
+        //    noOfMsgToSend.Add(restaurantID.ToString());
+        //    noOfMsgToSend.Add(restaurantID.ToString());
+        //    noOfMsgToSend.Add(restaurantID.ToString());
+        //    noOfMsgToSend.Add(restaurantID.ToString());
+        //    topicClient = new TopicClient(_sbConnectionString, _topicName);
+
+        //    try
+        //    {
+        //        foreach(var msgBody in noOfMsgToSend)
+        //        {
+        //            var message = new Message(Encoding.UTF8.GetBytes(msgBody));
+        //            await topicClient.sendAsync(message);
+        //        }
+        //    }
+        //}
     }
 }
 #endregion

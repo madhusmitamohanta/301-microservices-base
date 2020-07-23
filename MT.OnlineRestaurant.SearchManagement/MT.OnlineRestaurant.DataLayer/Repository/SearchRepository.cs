@@ -234,6 +234,41 @@ namespace MT.OnlineRestaurant.DataLayer.Repository
                 throw ex;
             }
         }
+
+        public TblMenu ItemPriceChanged(int restaurantID, int menuID)
+        {
+            try
+            {
+                TblMenu menuObj = new TblMenu();
+                if (db != null)
+                {
+                    //    menuObj = (from m in db.TblMenu
+                    //               join offer in db.TblOffer on m.Id equals offer.TblMenuId
+                    //               join restaurant in db.TblRestaurantDetails on offer.TblRestaurantId equals restaurant.TblRestaurantId
+                    //               where restaurant.TblRestaurantId == restaurantID && m.Id == menuID
+                    //               select new TblMenu
+                    //               {
+                    //                   quantity = m.quantity
+                    //               }).FirstOrDefault();                   
+                    //}
+                    menuObj = (from offer in db.TblOffer
+                               join menu in db.TblMenu
+                               on offer.TblMenuId equals menu.Id
+                               join rest in db.TblRestaurantDetails
+                               on offer.TblRestaurantId equals rest.TblRestaurantId
+                               where rest.TblRestaurantId == restaurantID && menu.Id == menuID
+                               select new TblMenu
+                               {
+                                   quantity = menu.quantity
+                               }).FirstOrDefault();
+                }
+                return menuObj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
 
         #region private methods
